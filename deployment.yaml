@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-web
+  labels:
+    app: nodejs-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs-web
+  template:
+    metadata:
+      labels:
+        app: nodejs-web
+    spec:
+      containers:
+      - name: nodejs-web
+        image: zyadtarek/argocd
+        ports:
+        - containerPort: 3000 # Change to your application's port if different
+        env:
+        - name: NODE_ENV
+          value: "production"

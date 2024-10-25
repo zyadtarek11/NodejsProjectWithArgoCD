@@ -1,7 +1,7 @@
 provider "aws" {
   region = "eu-west-3"
-  access_key = "xD"
-  secret_key = "xD"
+  access_key = "...."
+  secret_key = "...."
 }
 
 # Creating VPC
@@ -115,6 +115,7 @@ resource "aws_instance" "jenkins" {
   # Block device configuration for the root volume
   root_block_device {
     delete_on_termination = false  # Set to 'false' to keep the root volume after instance termination
+    volume_size = 12  # Set root volume size to 12 GB
   }
   tags = {
     Name = "Jenkins Instance"
@@ -132,6 +133,7 @@ resource "aws_instance" "argocd" {
   # Block device configuration for the root volume
   root_block_device {
     delete_on_termination = false  # Set to 'false' to keep the root volume after instance termination
+    volume_size = 12  # Set root volume size to 12 GB
   }
   tags = {
     Name = "ArgoCD Instance"
