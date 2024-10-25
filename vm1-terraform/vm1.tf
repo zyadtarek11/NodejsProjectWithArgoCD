@@ -1,5 +1,5 @@
 provider "aws" {
-  region     = "us-west-3"
+  region = "us-west-3"
   access_key = env("my-access-key")
   secret_key = env("my-secret-key")
 }
@@ -7,8 +7,8 @@ provider "aws" {
 # Creating the EC2 Instance
 
 resource "aws_instance" "jenkins" {
-  ami                     = "ami-005fc0f236362e99f" # Ubuntu 22.04 LTS
-  instance_type           = "t2.micro"
+  ami = "ami-005fc0f236362e99f" # Ubuntu 22.04 LTS
+  instance_type = "t2.micro"
   tags = {
     Name = "admin"
   }
@@ -24,4 +24,14 @@ resource "aws_vpc" "dev-vpc" {
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.dev-vpc.id
+}
+
+# Creating ArgoCD EC2 Instance
+
+resource "aws_instance" "argocd" {
+  ami = "ami-005fc0f236362e99f" # Ubuntu 22.04 LTS
+  instance_type = "t2.micro"
+  tags = {
+    Name = "admin"
+  }
 }
