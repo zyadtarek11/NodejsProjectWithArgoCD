@@ -36,6 +36,10 @@ pipeline {
                     if (!fileExists('NodejsProjectWithArgoCD')) {
                         sh 'git clone https://github.com/zyadtarek11/NodejsProjectWithArgoCD.git'
                     }
+                    // Ensure repository is updated
+                    dir('NodejsProjectWithArgoCD') {
+                        sh 'git pull origin main'
+                    }
                 }
                 // Build Docker image
                 dir('NodejsProjectWithArgoCD') {
