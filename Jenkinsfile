@@ -31,25 +31,15 @@ pipeline {
         }
         stage('Dockerize') { 
             steps {
-                // Clone the Docker configuration repo if necessary
-                script {
-                    if (!fileExists('NodejsProjectWithArgoCD')) {
-                        sh 'git clone https://github.com/zyadtarek11/NodejsProjectWithArgoCD.git'
-                    }
-                    // Ensure repository is updated
-                    dir('NodejsProjectWithArgoCD') {
-                        sh 'git pull origin main'
-                    }
-                }
                 // Build Docker image
-                dir('NodejsProjectWithArgoCD') {
+                dir('nodejs.orgProject') {
                     sh 'docker build -t zyadtarek/argocd .'
                 }
             }
         }
         stage('Push Docker Image') { 
             steps {
-                dir('NodejsProjectWithArgoCD') {
+                dir('nodejs.orgProject') {
                     withCredentials([usernamePassword(credentialsId: 'docker-credentials', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
                         // Log in to Docker Hub using credentials
                         sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
