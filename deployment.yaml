@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: nodejs-web
-        image: zyadtarek/argocd
+        image: zyadtarek/argocd:16
         resources:
           limits:
             memory: "512Mi"
