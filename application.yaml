@@ -1,20 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: nodejs-web
-  namespace: argocd
+  name: webapp
 spec:
-  project: default
+  destination:
+    name: ''
+    namespace: webapp
+    server: https://kubernetes.default.svc
   source:
+    path: .
     repoURL: https://github.com/zyadtarek11/NodejsProjectWithArgoCD.git
     targetRevision: HEAD
-    path: guestbook
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: nodejs-web
+  sources: []
+  project: default
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true
-    automated:
-      selfHeal: true
-      prune: true
