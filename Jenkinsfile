@@ -32,9 +32,7 @@ pipeline {
         stage('Dockerize') { 
             steps {
                 // Build Docker image
-                dir('nodejs.orgProject') {
-                    sh 'docker build -t zyadtarek/argocd .'
-                }
+                    sh 'docker build -t zyadtarek/argocd:${BUILD_ID} https://github.com/zyadtarek11/NodejsProjectWithArgoCD.git#main'
             }
         }
         stage('Push Docker Image') { 
@@ -44,7 +42,7 @@ pipeline {
                         // Log in to Docker Hub using credentials
                         sh 'echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin'
                         // Push the image
-                        sh 'docker push zyadtarek/argocd'
+                        sh 'docker push zyadtarek/argocd:${BUILD_ID}'
                         // Log out from Docker after pushing
                         sh 'docker logout'
                     }
