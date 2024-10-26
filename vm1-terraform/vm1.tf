@@ -1,7 +1,7 @@
 provider "aws" {
   region = "eu-west-3"
-  access_key = "x"
-  secret_key = "x"
+  access_key = "xD"
+  secret_key = "xD"
 }
 
 # Creating VPC
@@ -129,8 +129,8 @@ resource "aws_security_group" "argocd_sg" {
   }
 
   ingress {
-    from_port = 3000
-    to_port = 3000
+    from_port = 30001
+    to_port = 30001
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
