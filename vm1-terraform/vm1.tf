@@ -54,7 +54,7 @@ resource "aws_route_table_association" "subnet2_association" {
 }
 
 # Create a Security Group
-resource "aws_security_group" "web_sg" {
+resource "aws_security_group" "jenkins_sg" {
   vpc_id = aws_vpc.dev-vpc.id
 
   ingress {
@@ -100,7 +100,57 @@ resource "aws_security_group" "web_sg" {
   }
 
   tags = {
-    Name = "Web Security Group"
+    Name = "Jenkins Security Group"
+  }
+}
+
+resource "aws_security_group" "argocd_sg" {
+  vpc_id = aws_vpc.dev-vpc.id
+
+  ingress {
+    from_port = 22
+    to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 80
+    to_port = 80
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 443
+    to_port = 443
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 3000
+    to_port = 3000
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 8080
+    to_port = 8080
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "Argocd Security Group"
   }
 }
 
@@ -109,7 +159,7 @@ resource "aws_instance" "jenkins" {
   ami = "ami-00d81861317c2cc1f" # Amazon linux 2023 AMI
   instance_type = "t3.medium"
   subnet_id = aws_subnet.subnet1.id
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  vpc_security_group_ids = [aws_security_group.jenkins_sg.id]
   associate_public_ip_address = true
   key_name = "jenkins-key"
   # Block device configuration for the root volume
@@ -127,7 +177,7 @@ resource "aws_instance" "argocd" {
   ami = "ami-00d81861317c2cc1f" # Amazon linux 2023 AMI
   instance_type = "t3.medium"
   subnet_id = aws_subnet.subnet2.id
-  vpc_security_group_ids = [aws_security_group.web_sg.id]
+  vpc_security_group_ids = [aws_security_group.argocd_sg.id]
   associate_public_ip_address = true
   key_name = "argocd-key"
   # Block device configuration for the root volume

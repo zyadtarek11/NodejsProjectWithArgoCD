@@ -17,8 +17,12 @@ spec:
       containers:
       - name: nodejs-web
         image: zyadtarek/argocd
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "200Mi"
+            cpu: "250m"
         ports:
-        - containerPort: 3000 # Change to your application's port if different
-        env:
-        - name: NODE_ENV
-          value: "production"
+        - containerPort: 3000 
