@@ -31,8 +31,10 @@ pipeline {
         }
         stage('Dockerize') { 
             steps {
+                dir('nodejs.orgProject') {
                 // Build Docker image
                     sh 'docker build -t zyadtarek/argocd:${BUILD_ID} https://github.com/zyadtarek11/NodejsProjectWithArgoCD.git#main'
+                }
             }
         }
         stage('Push Docker Image') { 
