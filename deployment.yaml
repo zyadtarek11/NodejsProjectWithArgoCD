@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nodejs-web
+  namespace: nodejs-web
   labels:
     app: nodejs-web
 spec:
