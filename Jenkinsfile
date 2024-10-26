@@ -33,7 +33,7 @@ pipeline {
             steps {
                 dir('nodejs.orgProject') {
                 // Build Docker image
-                    sh 'docker build -t zyadtarek/argocd:${BUILD_ID} -f https://github.com/zyadtarek11/NodejsProjectWithArgoCD.git#main .'
+                    sh 'docker build -t zyadtarek/argocd:${BUILD_ID} -f https://raw.githubusercontent.com/zyadtarek11/NodejsProjectWithArgoCD/refs/heads/main/Dockerfile .'
                 }
             }
         }
